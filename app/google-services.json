@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "11350794591",
+    "firebase_url": "https://androidcoiffeur.firebaseio.com",
+    "project_id": "androidcoiffeur",
+    "storage_bucket": "androidcoiffeur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11350794591:android:c1fccdecb5d64938eb96ea",
+        "android_client_info": {
+          "package_name": "com.bourmier.projetcoiffeur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11350794591-4n6kgibia219blujrlle9kn4th04b305.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bourmier.projetcoiffeur",
+            "certificate_hash": "7213dfe149e81378a64ee66e9b4d83c10743c919"
+          }
+        },
+        {
+          "client_id": "11350794591-41bbmenbm0ktddcbhpv833339fcbqgfq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0xNCHxwkxdODMmcZG1OKs_WGxAp3FYBI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11350794591-41bbmenbm0ktddcbhpv833339fcbqgfq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
