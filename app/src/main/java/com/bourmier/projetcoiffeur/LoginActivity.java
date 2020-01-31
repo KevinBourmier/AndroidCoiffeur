@@ -17,12 +17,13 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.Objects;
+
 public class LoginActivity extends AppCompatActivity {
 
     EditText username;
     Button login;
     SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     CheckBox saveLoginCheck;
 
 
@@ -31,43 +32,34 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        username = (EditText)findViewById(R.id.username);
-        login = (Button)findViewById(R.id.login);
+        username = findViewById(R.id.username);
+        login = findViewById(R.id.login);
+        saveLoginCheck = findViewById(R.id.saveLoginCheck);
+
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
-        saveLoginCheck = (CheckBox)findViewById(R.id.saveLoginCheck);
-        editor = sharedPreferences.edit();
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Login();
 
-        Intent mainActivity = new Intent(this, MainActivity.class);
-
-        //System.out.println("VOICI LE NOM DU CLIENT " + sharedPreferences.getString("username", username.getText().toString()));
-
-        if(!sharedPreferences.getString("username", username.getText().toString()).equals(""))
-            startActivity(mainActivity);
-
-        //if(sharedPreferences != null)
-           // startActivity(mainActivity);
-
-            login.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Login();
-
-                }
-            });
-                username.setText(sharedPreferences.getString("username", null));
             }
+        });
+
+        username.setText(sharedPreferences.getString("username", null));
+    }
 
     public void Login(){
         Intent mainActivity = new Intent(this, MainActivity.class);
 
         String user = username.getText().toString();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if(editor != null){
             startActivity(mainActivity);
 
-                editor.putBoolean("saveLogin", true);
-                editor.putString("username", user);
-                editor.commit();
+            editor.putBoolean("saveLogin", true);
+            editor.putString("username", user);
+            editor.apply();
 
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
