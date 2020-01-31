@@ -28,50 +28,29 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
-        TextView firstName = (TextView) findViewById(R.id.firstName);
-
-        String s = logSharedPreferences(this);
-        firstName.setText(s);
-
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
-
-    public static String logSharedPreferences(final Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("login", Context.MODE_PRIVATE);
-        Map<String, ?> allEntries = sharedPreferences.getAll();
-        String user = "";
-        for (Map.Entry<String, ?> entry : allEntries.entrySet()) {
-            final String key = entry.getKey();
-            final String value = entry.getValue().toString();
-            Log.d("map values", key + ": " + value);
-            if(key.equals("username"))
-                user = value;
-        }
-        return user;
-    }
-
-
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-            Fragment selectedFragment = null;
 
-            switch (menuItem.getItemId()){
-                case R.id.nav_home:
-                    selectedFragment = new HomeFragment();
-                    break;
-                case R.id.nav_fav:
-                    selectedFragment = new FavouriteFragment();
-                    break;
-                case R.id.nav_person:
-                    selectedFragment = new PersonFragment();
-                    break;
-            }
+        Fragment selectedFragment = null;
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+        switch (menuItem.getItemId()){
+            case R.id.nav_fav:
+                selectedFragment = new FavouriteFragment();
+                break;
+            case R.id.nav_person:
+                selectedFragment = new PersonFragment();
+                break;
+            default:
+                selectedFragment = new HomeFragment();
+        }
 
-            return true;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+
+        return true;
         }
     };
 
