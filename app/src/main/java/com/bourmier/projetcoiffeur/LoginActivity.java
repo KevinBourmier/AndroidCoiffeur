@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -55,11 +56,12 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         if(editor != null){
-            startActivity(mainActivity);
-
             editor.putBoolean("saveLogin", true);
             editor.putString("username", user);
+            editor.putString("uuid", UUID.randomUUID().toString());
             editor.apply();
+            finish();
+            startActivity(mainActivity);
 
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
