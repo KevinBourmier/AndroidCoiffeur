@@ -40,6 +40,7 @@ public class AppointmentActivity extends AppCompatActivity {
 
     private Validator validator;
     private Appointment appointment;
+    private SharedPreferences preferences;
 
     final Calendar c = Calendar.getInstance();
     final int year = c.get(Calendar.YEAR);
@@ -54,8 +55,8 @@ public class AppointmentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_appointment);
 
         appointment = new Appointment();
+        preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        SharedPreferences preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         nameInputText = findViewById(R.id.appointment_name_field);
         TextInputLayout nameInputTextLayout = findViewById(R.id.appointment_name_field_layout);
         nameInputText.setText(preferences.getString("username", ""));
@@ -97,6 +98,7 @@ public class AppointmentActivity extends AppCompatActivity {
 
                     appointment.addAppointmnent(
                         nameInputText.getText().toString(),
+                        preferences.getString("uuid", null),
                         hairdresserInputText.getText().toString(),
                             new Timestamp(appointmentDate),
                         new OnSuccessListener<DocumentReference>() {

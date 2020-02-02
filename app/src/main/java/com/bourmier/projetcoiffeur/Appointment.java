@@ -20,10 +20,11 @@ public class Appointment {
         firestore = FirebaseFirestore.getInstance();
     }
 
-    public void addAppointmnent(String name, String hairdresser, Timestamp date, OnSuccessListener<DocumentReference> successListener, OnFailureListener failureListener){
+    public void addAppointmnent(String name, String uuid, String hairdresser, Timestamp date, OnSuccessListener<DocumentReference> successListener, OnFailureListener failureListener){
 
         HashMap<String, Object> data = new HashMap<>();
         data.put("name", name);
+        data.put("uuid", uuid);
         data.put("hairdresser", hairdresser);
         data.put("date", date);
 

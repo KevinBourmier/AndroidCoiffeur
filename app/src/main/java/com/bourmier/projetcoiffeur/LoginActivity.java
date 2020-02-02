@@ -3,21 +3,13 @@ package com.bourmier.projetcoiffeur;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.Objects;
 import java.util.UUID;
 
 public class LoginActivity extends AppCompatActivity {
@@ -60,8 +52,9 @@ public class LoginActivity extends AppCompatActivity {
             editor.putString("username", user);
             editor.putString("uuid", UUID.randomUUID().toString());
             editor.apply();
-            finish();
+
             startActivity(mainActivity);
+            finish();
 
         } else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
