@@ -21,11 +21,11 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        TextView firstName = view.findViewById(R.id.firstName);
+        TextView firstName = view.findViewById(R.id.home_hello_message);
 
         SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
 
-        firstName.setText(preferences.getString("username", ""));
+        firstName.setText(getString(R.string.hello, preferences.getString("username", "")));
 
         return view;
     }
