@@ -12,6 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Objects;
 
 public class HomeFragment extends Fragment {
@@ -28,5 +30,13 @@ public class HomeFragment extends Fragment {
         firstName.setText(getString(R.string.hello, preferences.getString("username", "")));
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        FirebaseAnalytics.getInstance(getContext()).setCurrentScreen(getActivity(), this.getClass().getSimpleName(), this.getClass().getSimpleName());
     }
 }
