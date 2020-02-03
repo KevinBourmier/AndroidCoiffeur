@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,22 +33,22 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-        Fragment selectedFragment = null;
+            Fragment selectedFragment = null;
 
-        switch (menuItem.getItemId()){
-            case R.id.nav_fav:
-                selectedFragment = new FavouriteFragment();
-                break;
-            case R.id.nav_person:
-                selectedFragment = new PersonFragment();
-                break;
-            default:
-                selectedFragment = new HomeFragment();
-        }
+            switch (menuItem.getItemId()){
+                case R.id.nav_fav:
+                    selectedFragment = new FavouriteFragment();
+                    break;
+                case R.id.nav_person:
+                    selectedFragment = new PersonFragment();
+                    break;
+                default:
+                    selectedFragment = new HomeFragment();
+            }
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
 
-        return true;
+            return true;
         }
     };
 

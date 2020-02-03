@@ -22,6 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentReference;
 
 import java.text.SimpleDateFormat;
@@ -41,6 +42,7 @@ public class AppointmentActivity extends AppCompatActivity {
     private Validator validator;
     private Appointment appointment;
     private SharedPreferences preferences;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     final Calendar c = Calendar.getInstance();
     final int year = c.get(Calendar.YEAR);
@@ -78,6 +80,8 @@ public class AppointmentActivity extends AppCompatActivity {
         validator.addField(dateInputText, dateInputTextLayout, dateRule);
         validator.addField(timeInputText, timeInputTextLayout, timeRule);
 
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
         Button sendFormButton = findViewById(R.id.appointment_validate_button);
         sendFormButton.setOnClickListener(formListener);
     }
@@ -95,15 +99,20 @@ public class AppointmentActivity extends AppCompatActivity {
 
                 try{
                     Date appointmentDate = dateFormat.parse(dateInputText.getText().toString() + " " + timeInputText.getText().toString());
+                    final Timestamp time = new Timestamp(appointmentDate);
 
                     appointment.addAppointmnent(
                         nameInputText.getText().toString(),
                         preferences.getString("uuid", null),
                         hairdresserInputText.getText().toString(),
-                            new Timestamp(appointmentDate),
+                        time,
                         new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
+
+                                Bundle bundle = new Bundle();
+                                bundle.putString("appointment_date", time.toString());
+                                mFirebaseAnalytics.logEvent("appointment_take", bundle);
 
                                 Intent result = new Intent();
                                 result.putExtra("id", documentReference.getId());
