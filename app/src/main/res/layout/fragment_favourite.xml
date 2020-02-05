@@ -4,19 +4,18 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/textData"
-        android:textSize="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp" />
-
-    <TextView
         android:id="@+id/textView"
         android:textSize="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mes prochains rendez-vous"
         android:textAlignment="center" />
+
+    <ListView
+        android:id="@+id/listAppointment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp" />
 
 
 </RelativeLayout>

@@ -3,10 +3,11 @@ package com.bourmier.projetcoiffeur;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,31 +21,31 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 import static java.lang.System.currentTimeMillis;
 
 public class FavouriteFragment extends Fragment {
 
     private TextView textView;
+    private ListView listView;
+    private ArrayList<StringBuilder> list;
+    private ArrayAdapter adapter;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_favourite, container, false);
-        textView = (TextView)v.findViewById(R.id.textData);
-        readAppointment();
 
+        listView = (ListView)v.findViewById(R.id.listAppointment);
+        list = new ArrayList<StringBuilder>();
+
+        readAppointment();
 
         return v;
 
@@ -55,10 +56,10 @@ public class FavouriteFragment extends Fragment {
         SharedPreferences preferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         final long tsLong = currentTimeMillis()/1000;
         //System.out.println(tsLong);
-
         final String idUser = preferences.getString("uuid", "");
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("appointment").whereEqualTo("uuid", idUser)
+        db.collection("appointment")
+                .whereEqualTo("uuid", idUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -68,6 +69,8 @@ public class FavouriteFragment extends Fragment {
                             Date date;
                             DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
                             String strDate;
+
+
 
                             for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
                                 Timestamp t = (Timestamp) document.getData().get("date");
@@ -80,9 +83,13 @@ public class FavouriteFragment extends Fragment {
                                             .append(strDate)
                                             .append("\n\n");
                                 }
-                            }
 
-                            textView.setText(data.toString());
+
+
+                            }
+                            adapter = new ArrayAdapter(getActivity(), R.layout.row, R.id.coiffeur, list);
+                            list.add(data);
+                            listView.setAdapter(adapter);
 
                         }
 
