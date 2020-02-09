@@ -25,9 +25,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_activity);
 
-        username = findViewById(R.id.username);
-        login = findViewById(R.id.login);
-        saveLoginCheck = findViewById(R.id.saveLoginCheck);
+        username = findViewById(R.id.login_username_field);
+        login = findViewById(R.id.login_validate_button);
+        saveLoginCheck = findViewById(R.id.login_remember_me_box);
 
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         login.setOnClickListener(new View.OnClickListener() {

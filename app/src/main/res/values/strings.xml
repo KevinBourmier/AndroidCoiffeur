@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjetCoiffeur</string>
+    <string name="app_name">ESGI hairdresser</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -19,4 +19,6 @@
     <string name="appointment_add">Votre rendez vous à été ajouté</string>
     <string name="dateFormat">%1$02d/%2$02d/%3$04d</string>
     <string name="timeFormat">%1$02d:%2$02d</string>
+    <string name="remember_me">Se souvenir de moi</string>
+    <string name="register">S\'enregister</string>
 </resources>
