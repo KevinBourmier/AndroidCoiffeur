@@ -11,30 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.bourmier.projetcoiffeur.validator.AppointmentArrayAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
-
-import static java.lang.System.currentTimeMillis;
 
 public class FavouriteFragment extends Fragment {
 
@@ -91,43 +78,6 @@ public class FavouriteFragment extends Fragment {
                      //Log.d("firestore", "Current data: " + snapshot.getDocuments());
                  }
             });
-//        db.collection("appointment")
-//                .whereEqualTo("uuid", idUser)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            StringBuilder data = new StringBuilder();
-//                            Date date;
-//                            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
-//                            String strDate;
-//
-//
-//                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
-//                                Timestamp t = (Timestamp) document.getData().get("date");
-//                                //System.out.println("Voici la date : " + t.getSeconds());
-//                                date = t.toDate();
-//                                strDate = dateFormat.format(date);
-//                                if(t.getSeconds() >= tsLong) {
-//                                    data.append("Nom du coiffeur : ").append(document.getData().get("hairdresser").toString())
-//                                            .append("\nDate : ")
-//                                            .append(strDate)
-//                                            .append("\n\n");
-//                                }
-//
-//
-//
-//                            }
-//                            adapter = new ArrayAdapter(getActivity(), R.layout.row, R.id.coiffeur, list);
-//                            list.add(data);
-//                            listView.setAdapter(adapter);
-//
-//                        }
-//
-//                    }
-//                });
     }
 
 }
