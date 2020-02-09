@@ -17,5 +17,14 @@
         android:layout_height="match_parent"
         android:layout_marginTop="50dp" />
 
+    <TextView
+        android:id="@+id/emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAlignment="center"
+        android:textSize="20dp" />
+
+
 
 </RelativeLayout>

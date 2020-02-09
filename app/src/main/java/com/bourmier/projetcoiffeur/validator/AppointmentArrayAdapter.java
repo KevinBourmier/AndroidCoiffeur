@@ -11,15 +11,24 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bourmier.projetcoiffeur.R;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.type.Color;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
+import java.text.DateFormat;
+
 
 public class AppointmentArrayAdapter extends ArrayAdapter<DocumentChange> {
 
     private Context context;
     private ArrayList<DocumentChange> list;
+    Date newDate;
+    DateFormat dateFormat;
+    String strDate;
 
     public AppointmentArrayAdapter(Context context, ArrayList<DocumentChange> element){
         super(context, -1, element);
@@ -36,10 +45,15 @@ public class AppointmentArrayAdapter extends ArrayAdapter<DocumentChange> {
         View rowView = inflater.inflate(R.layout.appointment_list_item, parent, false);
 
         TextView haidresser = rowView.findViewById(R.id.list_appointment_hairdresser_name);
+        haidresser.setTextSize(20);
         haidresser.setText(list.get(position).getDocument().get("hairdresser").toString());
 
         TextView date = rowView.findViewById(R.id.list_appointment_date);
-        date.setText("02/02/2020");
+        Timestamp t = (Timestamp) list.get(position).getDocument().get("date");
+        newDate = t.toDate();
+        dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
+        strDate = dateFormat.format(newDate);
+        date.setText(strDate);
 
         return rowView;
     }
