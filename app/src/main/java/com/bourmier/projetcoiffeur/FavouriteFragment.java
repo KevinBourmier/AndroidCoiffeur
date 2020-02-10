@@ -76,13 +76,6 @@ public class FavouriteFragment extends Fragment {
                              return timestamp1.compareTo(timestamp2);
                          }
                      });
-
-//                     System.out.println("Adapter : " + adapter.getCount());
-//                     if(adapter.getCount() == 0){
-//                         emptyList.setText("Vous n'avez pas de rendez vous !");
-//                     } else if (adapter.getCount() > 0){
-//                         emptyList.setText(" ");
-//                     }
                  }
             });
     }

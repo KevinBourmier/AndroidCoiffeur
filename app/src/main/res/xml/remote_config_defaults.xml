@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- START xml_defaults -->
+<defaultsMap>
+    <entry>
+        <key>home_description</key>
+        <value>Bienvenue sur l'application d'ESGI haidresser</value>
+    </entry>
+    <entry>
+        <key>home_localisation</key>
+        <value>Retrouvez nous au 242 avenue du Faubourg Saint 75012 Paris</value>
+    </entry>
+</defaultsMap>

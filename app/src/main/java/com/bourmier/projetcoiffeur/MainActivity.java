@@ -1,10 +1,5 @@
 package com.bourmier.projetcoiffeur;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,12 +7,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnAddAppointmentActivityStart{
 
+    int currentFragmentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(navListener);
 
+        currentFragmentId = R.id.nav_home;
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
     }
 
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
             Fragment selectedFragment = null;
+
+            if(menuItem.getItemId() == currentFragmentId)
+
+                return false;
 
             switch (menuItem.getItemId()){
                 case R.id.nav_fav:
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
                 default:
                     selectedFragment = new HomeFragment();
             }
+
+            currentFragmentId = menuItem.getItemId();
 
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
 
@@ -68,14 +75,19 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
 
             case R.id.add_appointment:
-                Intent intent = new Intent(this, AppointmentActivity.class);
-                startActivityForResult(intent, 1);
+                startAddAppointmentActivity();
                 break;
             default:
                 break;
         }
 
         return true;
+    }
+
+    public void startAddAppointmentActivity() {
+
+        Intent intent = new Intent(this, AppointmentActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     @Override

@@ -1,21 +1,17 @@
 package com.bourmier.projetcoiffeur;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.bourmier.projetcoiffeur.validator.AppointmentArrayAdapter;
-import com.bourmier.projetcoiffeur.validator.PersonArrayAdapter;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,17 +19,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-
-
-import com.google.firebase.analytics.FirebaseAnalytics;
+import java.util.Comparator;
 
 public class PersonFragment extends Fragment {
 
-    private TextView textView;
-    private ListView listView;
-    private ArrayList<StringBuilder> list;
-    private ArrayAdapter adapter;
-    private TextView emptyList;
+    ProgressBar progressBar;
 
 
     @Nullable
@@ -41,7 +31,10 @@ public class PersonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_person, container, false);
 
-        listView = v.findViewById(R.id.listPerson);
+        ListView listView = v.findViewById(R.id.listPerson);
+        TextView emptyList = v.findViewById(R.id.ability_list_empty_text);
+        progressBar = v.findViewById(R.id.ability_list_loading_spinner);
+        listView.setEmptyView(emptyList);
 
         readPerson(listView);
 
@@ -53,25 +46,30 @@ public class PersonFragment extends Fragment {
         final ArrayList<DocumentChange> list = new ArrayList<>();
         final PersonArrayAdapter adapter = new PersonArrayAdapter(this.getContext(), list);
         listView.setAdapter(adapter);
-        //System.out.println(tsLong);
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("benefit")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w("firestore", "Listen failed.", e);
-                            return;
-                        }
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+
+                    progressBar.setVisibility(View.GONE);
+
+                    if (e == null) {
                         adapter.addAll(snapshot.getDocumentChanges());
 
-                        System.out.println("Adapter : " + adapter.getCount());
+                        adapter.sort(new Comparator<DocumentChange>() {
+                            @Override
+                            public int compare(DocumentChange documentChange, DocumentChange t1) {
+                                Long price1 = (Long) documentChange.getDocument().get("price");
+                                Long price2 = (Long) t1.getDocument().get("price");
 
-
-                        //Log.d("firestore", "Current data: " + snapshot.getDocuments());
+                                return price1.compareTo(price2);
+                            }
+                        });
                     }
-                });
+                }
+            });
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.bourmier.projetcoiffeur.validator;
+package com.bourmier.projetcoiffeur;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -36,7 +36,7 @@ public class PersonArrayAdapter extends ArrayAdapter<DocumentChange> {
         benefits.setText(list.get(position).getDocument().get("benefit").toString());
 
         TextView prices = rowView.findViewById(R.id.list_ability_price);
-        prices.setText((list.get(position).getDocument().get("price").toString())+"€");
+        prices.setText(context.getString(R.string.price_euro, list.get(position).getDocument().get("price").toString()));
 
         return rowView;
     }
