@@ -9,7 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AppointmentActivity" android:label="@string/add_appointment"/>
+        <receiver android:name=".NextAppointmentWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/next_appointment_widget_info" />
+        </receiver>
+
+        <activity
+            android:name=".AppointmentActivity"
+            android:label="@string/add_appointment" />
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +29,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" android:theme="@style/AppThemeFulScreen"/>
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/AppThemeFulScreen" />
         <activity android:name=".MainActivity" />
     </application>
 
