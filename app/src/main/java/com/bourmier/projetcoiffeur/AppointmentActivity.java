@@ -9,11 +9,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.TimePicker;
 
+import com.bourmier.projetcoiffeur.model.Appointment;
 import com.bourmier.projetcoiffeur.validator.Validator;
 import com.bourmier.projetcoiffeur.validator.ValidatorRule;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -37,6 +40,8 @@ public class AppointmentActivity extends AppCompatActivity {
     private TextInputEditText timeInputText;
     private TextInputEditText nameInputText;
     private TextInputEditText hairdresserInputText;
+    Button sendFormButton;
+    ProgressBar progressBar;
 
     private Validator validator;
     private Appointment appointment;
@@ -78,16 +83,29 @@ public class AppointmentActivity extends AppCompatActivity {
         validator.addField(dateInputText, dateInputTextLayout, dateRule);
         validator.addField(timeInputText, timeInputTextLayout, timeRule);
 
-        Button sendFormButton = findViewById(R.id.appointment_validate_button);
+
+        sendFormButton = findViewById(R.id.appointment_validate_button);
         sendFormButton.setOnClickListener(formListener);
+
+        progressBar = findViewById(R.id.appointment_loading_spinner);
     }
 
     final View.OnClickListener formListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
 
+            sendFormButton.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+
             final View tempView = view;
             boolean validate = validator.validate();
+
+            if(validate){
+
+                sendFormButton.setEnabled(true);
+                progressBar.setVisibility(View.GONE);
+            }
+
 
             if(!validate){
 
@@ -105,6 +123,8 @@ public class AppointmentActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
 
+                                Log.d("add_appointment", "DocumentSnapshot successfully written!");
+
                                 Intent result = new Intent();
                                 result.putExtra("id", documentReference.getId());
                                 setResult(RESULT_OK, result);
@@ -115,12 +135,19 @@ public class AppointmentActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
 
+                                Log.d("add_appointment", "DocumentSnapshot failed written!");
+
+                                sendFormButton.setEnabled(true);
+                                progressBar.setVisibility(View.GONE);
+
                                 Snackbar.make(tempView, R.string.error_db_save, Snackbar.LENGTH_LONG).show();
                             }
                         }
                     );
 
                 }catch (Exception e){
+
+                    Log.d("add_appointment", "DocumentSnapshot exception written!");
 
                     Snackbar.make(view, getString(R.string.error_occured), Snackbar.LENGTH_LONG).show();
                 }

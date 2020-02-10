@@ -1,4 +1,4 @@
-package com.bourmier.projetcoiffeur;
+package com.bourmier.projetcoiffeur.model;
 
 import androidx.annotation.NonNull;
 

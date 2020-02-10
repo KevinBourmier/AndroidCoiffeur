@@ -1,4 +1,4 @@
-package com.bourmier.projetcoiffeur.validator;
+package com.bourmier.projetcoiffeur;
 
 import android.content.Context;
 import android.view.LayoutInflater;

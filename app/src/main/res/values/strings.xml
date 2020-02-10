@@ -21,4 +21,6 @@
     <string name="timeFormat">%1$02d:%2$02d</string>
     <string name="remember_me">Se souvenir de moi</string>
     <string name="register">S\'enregister</string>
+    <string name="next_appointment">Mes prochains rendez vous</string>
+    <string name="no_element">Aucun element</string>
 </resources>
