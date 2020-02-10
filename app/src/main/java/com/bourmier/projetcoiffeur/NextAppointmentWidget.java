@@ -64,13 +64,12 @@ public class NextAppointmentWidget extends AppWidgetProvider {
                             Timestamp date = (Timestamp) document.getData().get("date");
                             newDate = date.toDate();
                             dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
-                            strDate += "Date : " + dateFormat.format(newDate);
+                            strDate += context.getString(R.string.dateHair) + " " + dateFormat.format(newDate);
 
                             String hairdresser = new String();
-                            hairdresser += "Nom du coiffeur : " + document.getData().get("hairdresser").toString();
+                            hairdresser += context.getString(R.string.hairdresserName) + " " + document.getData().get("hairdresser").toString();
 
                             for (int appWidgetId : appWidgetIds) {
-                                System.out.println("Je rentre dans le for");
                                 updateAppWidget(context, appWidgetManager, appWidgetId, hairdresser, strDate);
                             }
 
