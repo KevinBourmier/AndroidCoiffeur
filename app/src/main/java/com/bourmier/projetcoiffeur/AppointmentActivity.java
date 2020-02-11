@@ -167,7 +167,7 @@ public class AppointmentActivity extends AppCompatActivity {
 
                     Log.d("add_appointment", "DocumentSnapshot exception written!");
 
-                    Snackbar.make(view, getString(R.string.error_occured), Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(view, getString(R.string.error_occurred), Snackbar.LENGTH_LONG).show();
                 }
             }
         }
