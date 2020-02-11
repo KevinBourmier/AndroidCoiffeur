@@ -4,7 +4,8 @@
     android:background="@color/colorPrimary"
     android:padding="@dimen/widget_margin"
     android:paddingStart="15dp"
-    android:paddingEnd="15dp">
+    android:paddingEnd="15dp"
+    android:id="@+id/widget_layout">
 
     <TextView
         android:id="@+id/widget_main_title"

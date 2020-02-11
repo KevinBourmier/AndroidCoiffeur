@@ -51,7 +51,7 @@ public class AppointmentArrayAdapter extends ArrayAdapter<DocumentChange> {
         TextView date = rowView.findViewById(R.id.list_appointment_date);
         Timestamp t = (Timestamp) list.get(position).getDocument().get("date");
         newDate = t.toDate();
-        dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
+        dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.getDefault());
         strDate = dateFormat.format(newDate);
         date.setText(strDate);
 

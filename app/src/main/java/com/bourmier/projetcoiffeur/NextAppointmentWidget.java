@@ -1,8 +1,10 @@
 package com.bourmier.projetcoiffeur;
 
+import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +47,10 @@ public class NextAppointmentWidget extends AppWidgetProvider {
             views.setViewVisibility(R.id.widget_no_appointment, View.VISIBLE);
         }
 
+        Intent intent = new Intent(context, StartActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
+        views.setOnClickPendingIntent(R.id.widget_layout, pendingIntent);
+
         // Instruct the widget manager to update the widget
         appWidgetManager.updateAppWidget(appWidgetId, views);
     }
@@ -72,7 +78,7 @@ public class NextAppointmentWidget extends AppWidgetProvider {
 
                             QueryDocumentSnapshot document = (QueryDocumentSnapshot) task.getResult().getDocuments().get(0);
                             Date newDate = ((Timestamp) document.getData().get("date")).toDate();
-                            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.FRANCE);
+                            DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.MEDIUM, Locale.getDefault());
                             String strDate = context.getString(R.string.dateHair, dateFormat.format(newDate));
                             String hairdresser = context.getString(R.string.hairdresserName, document.getData().get("hairdresser").toString());
 

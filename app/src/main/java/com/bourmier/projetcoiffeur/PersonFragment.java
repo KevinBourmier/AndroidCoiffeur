@@ -61,15 +61,15 @@ public class PersonFragment extends Fragment {
                 if (task.getException() == null) {
                     adapter.addAll(task.getResult().getDocumentChanges());
 
-//                    adapter.sort(new Comparator<DocumentChange>() {
-//                        @Override
-//                        public int compare(DocumentChange documentChange, DocumentChange t1) {
-//                            Long price1 = (Long) documentChange.getDocument().get("price");
-//                            Long price2 = (Long) t1.getDocument().get("price");
-//
-//                            return price1.compareTo(price2);
-//                        }
-//                    });
+                    adapter.sort(new Comparator<DocumentChange>() {
+                        @Override
+                        public int compare(DocumentChange documentChange, DocumentChange t1) {
+                            Long price1 = (Long) documentChange.getDocument().get("price");
+                            Long price2 = (Long) t1.getDocument().get("price");
+
+                            return price1.compareTo(price2);
+                        }
+                    });
                 }
             }
         });
