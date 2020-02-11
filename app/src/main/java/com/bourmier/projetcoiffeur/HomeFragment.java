@@ -77,7 +77,13 @@ public class HomeFragment extends Fragment {
                 .build();
         config.setConfigSettingsAsync(configSettings);
 
-        config.setDefaultsAsync(R.xml.remote_config_defaults);
+        config.setDefaultsAsync(R.xml.remote_config_defaults).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+
+                updateHomeText();
+            }
+        });
 
         config.fetchAndActivate().addOnCompleteListener(new OnCompleteListener<Boolean>() {
             @Override

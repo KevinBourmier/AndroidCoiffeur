@@ -22,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -55,6 +56,7 @@ public class FavouriteFragment extends Fragment {
 
         db.collection("appointment")
             .whereEqualTo("uuid", idUser)
+            .whereGreaterThan("date", Timestamp.now())
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                  @Override
                  public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {

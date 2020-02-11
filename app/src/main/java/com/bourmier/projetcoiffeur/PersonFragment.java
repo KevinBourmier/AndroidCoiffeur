@@ -8,9 +8,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
@@ -49,27 +52,27 @@ public class PersonFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("benefit")
-            .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                @Override
-                public void onEvent(@Nullable QuerySnapshot snapshot, @Nullable FirebaseFirestoreException e) {
+            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                    progressBar.setVisibility(View.GONE);
+                progressBar.setVisibility(View.GONE);
 
-                    if (e == null) {
-                        adapter.addAll(snapshot.getDocumentChanges());
+                if (task.getException() == null) {
+                    adapter.addAll(task.getResult().getDocumentChanges());
 
-                        adapter.sort(new Comparator<DocumentChange>() {
-                            @Override
-                            public int compare(DocumentChange documentChange, DocumentChange t1) {
-                                Long price1 = (Long) documentChange.getDocument().get("price");
-                                Long price2 = (Long) t1.getDocument().get("price");
-
-                                return price1.compareTo(price2);
-                            }
-                        });
-                    }
+//                    adapter.sort(new Comparator<DocumentChange>() {
+//                        @Override
+//                        public int compare(DocumentChange documentChange, DocumentChange t1) {
+//                            Long price1 = (Long) documentChange.getDocument().get("price");
+//                            Long price2 = (Long) t1.getDocument().get("price");
+//
+//                            return price1.compareTo(price2);
+//                        }
+//                    });
                 }
-            });
+            }
+        });
     }
 
     @Override

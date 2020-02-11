@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,6 +50,7 @@ public class AppointmentActivity extends AppCompatActivity {
     private Appointment appointment;
     private SharedPreferences preferences;
     private FirebaseAnalytics mFirebaseAnalytics;
+    private Context context;
 
     final Calendar c = Calendar.getInstance();
     final int year = c.get(Calendar.YEAR);
@@ -63,6 +66,7 @@ public class AppointmentActivity extends AppCompatActivity {
 
         appointment = new Appointment();
         preferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+        context = this;
 
         nameInputText = findViewById(R.id.appointment_name_field);
         TextInputLayout nameInputTextLayout = findViewById(R.id.appointment_name_field_layout);
@@ -131,6 +135,13 @@ public class AppointmentActivity extends AppCompatActivity {
                                 Bundle bundle = new Bundle();
                                 bundle.putString("appointment_date", time.toString());
                                 mFirebaseAnalytics.logEvent("appointment_take", bundle);
+
+                                Intent intentWidget = new Intent(context, NextAppointmentWidget.class);
+                                intentWidget.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                                int[] ids = AppWidgetManager.getInstance(getApplication())
+                                                            .getAppWidgetIds(new ComponentName(getApplication(), NextAppointmentWidget.class));
+                                intentWidget.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                                sendBroadcast(intentWidget);
 
                                 Intent result = new Intent();
                                 result.putExtra("id", documentReference.getId());
